@@ -1,0 +1,6 @@
+File,MedicineName,PredictedPotencyLoss
+Comirnaty_test.csv,Comirnaty,6.302970243053265
+Gardasil9_test.csv,Gardasil9,6.128861067585788
+HepatitisB_test.csv,HepatitisB,6.135810807481768
+Humira_test.csv,Humira,6.112406700105359
+Lantus(insulin_glargine)_test.csv,Lantus(insulin glargine),6.384258123569191

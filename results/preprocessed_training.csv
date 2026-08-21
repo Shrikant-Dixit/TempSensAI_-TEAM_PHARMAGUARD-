@@ -1,0 +1,11 @@
+File,MedicineName,MedicineCode,AvgTempDeviation,BadTempDurationHours
+Comirnaty_1.csv,Comirnaty,0,1.637865,4.866666666666666
+Comirnaty_2.csv,Comirnaty,0,1.61679,4.941666666666666
+Gardasil9_1.csv,Gardasil9,3,1.737015,5.175
+Gardasil9_2.csv,Gardasil9,3,1.69047,5.158333333333333
+HepatitisB_1.csv,HepatitisB,4,1.53759,4.533333333333333
+HepatitisB_2.csv,HepatitisB,4,1.512515,4.541666666666667
+Humira_1.csv,Humira,2,1.63166,5.075
+Humira_2.csv,Humira,2,1.6058350000000001,4.9
+Lantus(insulin_glargine)_1.csv,Lantus(insulin glargine),1,1.5326399999999998,4.875
+Lantus(insulin_glargine)_2.csv,Lantus(insulin glargine),1,1.56771,4.8
