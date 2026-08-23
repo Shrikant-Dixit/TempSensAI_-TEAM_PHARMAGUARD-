@@ -1,0 +1,58 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Prediction Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Results for {{ medicine }}</h1>
+        <p class="prediction">AI Prediction: {{ prediction | round(2) }}%</p>
+
+        <div class="graph-container">
+            <img src="data:image/png;base64,{{ graph_data }}" alt="Temperature Graph">
+        </div>
+    </div>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Prediction Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- Title -->
+        <h1>Results for {{ medicine }}</h1>
+
+        <!-- Graph -->
+        <div class="graph-container">
+            <img src="data:image/png;base64,{{ graph_data }}" alt="Temperature Graph">
+        </div>
+
+        <!-- AI Analyzed Medicine Status -->
+        <div class="status-container {{ badge_class }}">
+            <h2>AI Analyzed Medicine Status</h2>
+            <p>Potency Loss: {{ prediction | round(2) }}%</p>
+            <p>Confidence Level: {{ (100 - prediction) | round(2) }}%</p>
+            <p>
+                Risk:
+                {% if badge_class == 'prediction-safe' %}
+                    No risk
+                {% elif badge_class == 'prediction-warning' %}
+                    Low risk
+                {% else %}
+                    Inadvisable
+                {% endif %}
+            </p>
+        </div>
+    </div>
+    <footer>
+        <img src="{{ url_for('static', filename='Footer.png') }}" alt="Pharma Guard Footer">
+    </footer>
+</body>
+</html>

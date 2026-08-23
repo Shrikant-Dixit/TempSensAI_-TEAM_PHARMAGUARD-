@@ -1,0 +1,95 @@
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #f5f7fa;
+    margin: 0;
+    padding: 0;
+    color: #333;
+
+    /* Watermark background */
+    background-image: url("../static/Pharma_Guard.png"); /* adjust path if needed */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    background-size: 600px; /* watermark size */
+    opacity: 0.83; /* keep page readable */
+}
+
+
+.container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+.graph-container {
+    text-align: center;
+    padding: 15px;
+    background: #fafafa;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 25px;
+}
+
+.graph-container img {
+    max-width: 90%;
+    height: auto;
+    border-radius: 6px;
+}
+
+/* Status container */
+.status-container {
+    background: #fff; /* white box */
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 1.2em; /* larger text */
+    font-weight: bold;
+    border: 2px solid #ddd;
+}
+
+/* Heading inside status */
+.status-container h2 {
+    margin-bottom: 15px;
+    font-size: 1.4em;
+}
+
+/* Text colors based on risk */
+.prediction-safe {
+    color: #27ae60; /* green */
+}
+
+.prediction-warning {
+    color: #e67e22; /* orange */
+}
+
+.prediction-danger {
+    color: #c0392b; /* red */
+}
+
+footer {
+    text-align: center;
+    margin-top: 30px;
+    padding: 0;
+    width: 100%;             /* full width */
+    background: #fff;        /* optional background to frame it */
+}
+
+footer img {
+    width: 100%;             /* stretch side to side */
+    max-height: 190px;       /* adjust to fit nicely */
+    object-fit: contain;     /* show full image without cropping */
+    opacity: 1;              /* full opacity */
+    border-radius: 0;        /* no rounded corners */
+    display: block;
+}
+
+
