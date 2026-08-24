@@ -1,22 +1,3 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Prediction Result</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-    <div class="container">
-        <h1>Results for {{ medicine }}</h1>
-        <p class="prediction">AI Prediction: {{ prediction | round(2) }}%</p>
-
-        <div class="graph-container">
-            <img src="data:image/png;base64,{{ graph_data }}" alt="Temperature Graph">
-        </div>
-    </div>
-</body>
-</html> -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,10 +7,9 @@
 </head>
 <body>
     <div class="container">
-        <!-- Title -->
+        
         <h1>Results for {{ medicine }}</h1>
 
-        <!-- Graph -->
         <div class="graph-container">
             <img src="data:image/png;base64,{{ graph_data }}" alt="Temperature Graph">
         </div>

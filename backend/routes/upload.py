@@ -8,8 +8,8 @@ UPLOAD_FOLDER = "test/"
 @upload_bp.route("/upload", methods=["GET"])
 def upload():
     # Hard-coded test values
-    filename = "Comirnaty_test.csv"  
-    medicine = "Comirnaty"
+    filename = "Gardasil9_test.csv"  
+    medicine = "Gardasil9"
 
     filepath = os.path.join(UPLOAD_FOLDER, filename)
 
