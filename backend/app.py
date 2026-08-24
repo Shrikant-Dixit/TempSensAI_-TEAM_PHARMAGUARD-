@@ -22,3 +22,4 @@ if __name__ == "__main__":
     # host="0.0.0.0" makes it accessible on your LAN (for QR testing)
     # port=5000 is the default Flask port
     app.run(host="0.0.0.0", port=5000, debug=True)
+
