@@ -1,4 +1,3 @@
-
 from flask import Blueprint, request, render_template
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -10,7 +9,6 @@ predict_bp = Blueprint("predict", __name__)
 
 MODEL_PATH = "models/gradient_boosting.pkl"
 
-# Medicine mapping
 medicine_map = {
     "Comirnaty": 0,
     "Lantus(insulin glargine)": 1,
@@ -22,7 +20,6 @@ medicine_map = {
 def preprocess_test_csv(file_path):
     df = pd.read_csv(file_path)
 
-    # Deviation from optimal range
     df["Deviation"] = df.apply(
         lambda row: 0 if row["OptimalMin"] <= row["Temperature"] <= row["OptimalMax"]
         else min(abs(row["Temperature"] - row["OptimalMin"]),
@@ -30,16 +27,14 @@ def preprocess_test_csv(file_path):
         axis=1
     )
 
-    # Outside range flag
     df["OutsideRange"] = df.apply(
         lambda row: 1 if not (row["OptimalMin"] <= row["Temperature"] <= row["OptimalMax"]) else 0,
         axis=1
     )
 
-    # Feature calculations
     avg_temp_deviation = df["Deviation"].mean()
     max_temp_deviation = df["Deviation"].max()
-    bad_temp_duration = df["OutsideRange"].sum() * 30 / 3600.0  # hours
+    bad_temp_duration = df["OutsideRange"].sum() * 30 / 3600.0
     time_above_25 = (df["Temperature"] > 25).sum() * 30 / 3600.0
     time_below_0 = (df["Temperature"] < 0).sum() * 30 / 3600.0
     temp_variance = df["Temperature"].var()
@@ -68,13 +63,10 @@ def predict():
     if not file_path or not medicine:
         return "Error: file path and medicine name must be provided."
 
-    # Preprocess CSV
     features, df = preprocess_test_csv(file_path)
 
-    # Load model
     model = joblib.load(MODEL_PATH)
 
-    # Build DataFrame with correct feature names
     X = pd.DataFrame([[
         features["MedicineCode"],
         features["AvgTempDeviation"],
@@ -86,30 +78,22 @@ def predict():
     ]], columns=["MedicineCode", "AvgTempDeviation", "MaxTempDeviation",
                  "BadTempDurationHours", "TimeAbove25C", "TimeBelow0C", "TemperatureVariance"])
 
-    # Predict potency loss
     predicted_loss = model.predict(X)[0]
 
-    # Downsample: take every 50th row
     df_downsampled = df.iloc[::50, :]
-
-    # Combine Date + Timestamp into full datetime
     df_downsampled["DateTime"] = pd.to_datetime(
         df_downsampled["Date"] + " " + df_downsampled["Timestamp"],
         format="%m/%d/%Y %H:%M:%S"
     )
 
-    # Calculate elapsed hours from the first row
     elapsed_seconds = (df_downsampled["DateTime"] - df_downsampled["DateTime"].iloc[0]).dt.total_seconds()
     elapsed_hours = elapsed_seconds / 3600.0
 
-        # Apply rolling average smoothing (window of 5 points)
     smoothed_temp = df_downsampled["Temperature"].rolling(window=5, center=True).mean()
 
-    # Plot smoothed line
     plt.figure(figsize=(8,4))
     plt.plot(elapsed_hours, smoothed_temp, color="red", linewidth=2, label="Smoothed trend")
 
-    # Color-coded scatter points
     for i in range(len(df_downsampled)):
         temp = df_downsampled["Temperature"].iloc[i]
         x = elapsed_hours.iloc[i]
@@ -121,7 +105,6 @@ def predict():
         else:
             plt.scatter(x, temp, color="red", s=20)
 
-    # Add reference lines for optimal range
     plt.axhline(y=2, color="green", linestyle="--", linewidth=1, label="Optimal Min (2°C)")
     plt.axhline(y=8, color="orange", linestyle="--", linewidth=1, label="Optimal Max (8°C)")
 
@@ -132,13 +115,11 @@ def predict():
     plt.legend()
     plt.xticks(np.arange(0, elapsed_hours.max()+0.1, 2))
 
-
     img = io.BytesIO()
     plt.savefig(img, format="png", dpi=250, bbox_inches="tight")
     img.seek(0)
     graph_url = base64.b64encode(img.getvalue()).decode()
 
-    # Decide badge color class based on prediction
     if predicted_loss <= 15:
         badge_class = "prediction-safe"
     elif 15 < predicted_loss <= 25:
@@ -151,3 +132,4 @@ def predict():
                            prediction=predicted_loss,
                            badge_class=badge_class,
                            graph_data=graph_url)
+
